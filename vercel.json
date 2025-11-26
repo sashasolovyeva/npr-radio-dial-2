@@ -1,0 +1,8 @@
+{
+  "build": {
+    "env": {
+      "VITE_PUBLIC_URL": "/"
+    }
+  },
+  "outputDirectory": "dist"
+}
