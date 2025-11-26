@@ -2,6 +2,23 @@
 import React, { useState, useRef } from 'react';
 import { RadioDial } from './components/RadioDial';
 
+import { DialOption } from './data/dialData'; 
+// Assuming the CSV is parsed or exported as a JSON array in this path
+import storyData from './data/final_data_clean.json'; 
+
+interface Story {
+  id: string; // Keep as string, assuming your data is correct, we will cast it below
+  category: string;
+  subcategory: string;
+  title: string;
+  text: string;
+  // Include all additional fields present in the JSON array from the CSV
+  collectionNames: string; 
+  publishDateTime: string;
+  profiles: any; // Use 'any' to avoid deep typing for complex/inconsistent objects
+  collections: any;
+}
+
 export default function App() {
   const [isExpanded, setIsExpanded] = useState(false);
   
@@ -11,6 +28,12 @@ export default function App() {
   const [middleAngle, setMiddleAngle] = useState(0);
   const [innerAngle, setInnerAngle] = useState(0);
   const [rawValues, setRawValues] = useState({ pot1: 0, pot2: 0, pot3: 0 });
+
+  const [activeFilters, setActiveFilters] = useState<{
+    outer: DialOption | null;
+    middle: DialOption | null;
+    inner: DialOption | null;
+  }>({ outer: null, middle: null, inner: null });
   
   const portRef = useRef<SerialPort | null>(null);
   const readerRef = useRef<ReadableStreamDefaultReader<Uint8Array> | null>(null);
@@ -19,6 +42,24 @@ export default function App() {
   const mapToAngle = (value: number) => {
     return (value / 1023) * 360 - 180;
   };
+
+  const displayStories = React.useMemo(() => {
+    // [FIX] Cast storyData to the expected Story[] type to override the compiler's inference
+    // This tells TypeScript: "I know the data has these types, trust me."
+    const stories = storyData as Story[]; 
+    
+    if (!activeFilters.outer) return [];
+    
+    // We match the Outer Dial label to the Story 'subcategory'
+    const categoryLabel = activeFilters.outer.label;
+    
+    return stories
+      .filter((story) => 
+        // Note: No need for (story: Story) in the filter argument when using .useMemo
+        story.subcategory?.toLowerCase() === activeFilters.outer?.label.toLowerCase()
+      )
+      .slice(0, 3);
+  }, [activeFilters.outer]);
 
   const handleConnect = async () => {
     try {
@@ -127,7 +168,7 @@ export default function App() {
         <div 
           className="fixed inset-0 z-40 transition-opacity duration-300"
           style={{
-            backgroundColor: '#00000099',
+            backgroundColor: '#000000aa',
           }}
           onClick={() => setIsExpanded(false)}
         />
@@ -151,8 +192,45 @@ export default function App() {
           externalInnerAngle={innerAngle}
           isConnected={isConnected}
           onCenterDotClick={handleCenterDotClick}
+          onFilterChange={setActiveFilters}
         />
       </div>
-    </div>
+
+      {/* [NEW] Content Display Area */}
+      {isExpanded && activeFilters.outer && (
+        <div className={`fixed z-50 transition-all duration-500 ease-in-out cursor-pointer stories-outer-container`}>
+          {displayStories.map((story) => (
+            <div 
+              key={story.id} 
+              className="story-card"
+            >
+              {/* <div className="story-slug">
+                {story.collectionNames}
+              </div> */}
+
+              <div className="story-category">
+                {story.category} • {story.subcategory}
+              </div>
+
+              <h3 className="story-headline">
+                {story.title}
+              </h3>
+
+              <div 
+                className="story-teaser" 
+                dangerouslySetInnerHTML={{__html: story.text}} 
+              />
+              </div>
+          ))}
+          
+          {displayStories.length === 0 && (
+            <div className="text-center text-white/70 mt-4">
+              No stories found for "{activeFilters.outer.label}"
+            </div>
+          )}
+        </div>
+      )}
+
+    </div> // Closing main App div
   );
 }

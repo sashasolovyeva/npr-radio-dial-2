@@ -35,6 +35,25 @@ export function RadioDial({
   const [outerAngle, setOuterAngle] = useState(externalOuterAngle ?? 0);
   const [middleAngle, setMiddleAngle] = useState(externalMiddleAngle ?? 0);
   const [innerAngle, setInnerAngle] = useState(externalInnerAngle ?? 0);
+
+  useEffect(() => {
+    if (externalOuterAngle !== undefined) {
+      setOuterAngle(externalOuterAngle);
+    }
+  }, [externalOuterAngle]);
+  
+  useEffect(() => {
+    if (externalMiddleAngle !== undefined) {
+      setMiddleAngle(externalMiddleAngle);
+    }
+  }, [externalMiddleAngle]);
+  
+  useEffect(() => {
+    if (externalInnerAngle !== undefined) {
+      setInnerAngle(externalInnerAngle);
+    }
+  }, [externalInnerAngle]);
+
   const [activeLayer, setActiveLayer] = useState<DialLayer>(null);
   const dialRef = useRef<HTMLDivElement>(null);
   const normalizedOuterAngle = ((outerAngle % 360) + 360) % 360;
@@ -128,8 +147,10 @@ export function RadioDial({
     }
     
     const layer = getClickedLayer(e.clientX, e.clientY);
-    setActiveLayer(layer);
+    
     if (layer) {
+      e.stopPropagation();
+      setActiveLayer(layer);
       updateAngle(e.clientX, e.clientY);
     }
   };
@@ -146,6 +167,8 @@ export function RadioDial({
     const layer = getClickedLayer(touch.clientX, touch.clientY);
     setActiveLayer(layer);
     if (layer) {
+      e.stopPropagation();
+      setActiveLayer(layer);
       updateAngle(touch.clientX, touch.clientY);
     }
   };
@@ -208,7 +231,9 @@ export function RadioDial({
   };
 
   return (
-    <div className="relative flex items-center justify-center gap-4 dial-outer-container">
+    <div 
+      className="relative flex items-center justify-center gap-4 dial-outer-container"
+    >
       <div
         ref={dialRef}
         className="relative size-[373px] cursor-pointer select-none touch-none"
@@ -239,7 +264,7 @@ export function RadioDial({
           <div 
             className="absolute inset-0 rounded-full bg-dial shadow-xl" 
             style={{
-              boxShadow: 'inset 0 0 50px rgba(0,0,0,0.3), 0 0 300px rgba(0,0,0)'
+              boxShadow: 'inset 0 0 50px rgba(0,0,0,0.3), 0 0 20px rgba(0,0,0)'
             }}
           />
           

@@ -1,4 +1,15 @@
 /*! tailwindcss v4.1.3 | MIT License | https://tailwindcss.com */
+
+@font-face {
+  font-family: 'NPRSans'; /* Specify a name for your font */
+  src: url('assets/NPRSans-VF.ttf') format('truetype-variations'); 
+}
+
+@font-face {
+  font-family: 'NPRSerif'; /* Specify a name for your font */
+  src: url('assets/NPRSerif-VF.ttf') format('truetype-variations'); 
+}
+
 @layer properties {
   @supports (((-webkit-hyphens: none)) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color: rgb(from red r g b)))) {
     *, :before, :after, ::backdrop {
@@ -900,6 +911,11 @@ html {
   font-size: .65rem;
   transition: color .2s ease, opacity .2s ease;
   opacity: .6;
+  font-family: 'NPRSans';
+  font-size: 11px;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: .04em;
 }
 
 .outer-label-item--active {
@@ -954,7 +970,7 @@ html {
 
 .dial-final-pos {
   right: 5%;
-  top: 20%;
+  top: 5%;
 
   @media screen and (max-width: 1000px) {
     right: -20%;
@@ -1043,4 +1059,55 @@ html {
 
 .flex {
   display: flex;
+}
+
+.stories-outer-container {
+  position: fixed;
+  right: 40px;
+  bottom: 0;
+  z-index: 40;
+  padding: 20px;
+  background-color: #000000cc;
+  border-radius: 16px 16px 0 0;
+  box-shadow: 0 0 10px #00000055;
+}
+
+.story-card {
+  background-color: #333333;
+  margin-bottom: 20px;
+  width: 100%;
+  max-width: 400px;
+  font-family: 'NPRSans';
+  border-radius: 8px;
+  padding: 12px 16px;
+  /* box-shadow: 0 0 30px #00000077; */
+}
+
+.story-category {
+  font-size: 12px;
+  color: #d25e40;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: .06em;
+}
+
+.story-headline {
+  font-family: 'NPRSans';
+  font-size: 16px;
+  margin-top: 4px;
+  color: #ccc;
+}
+
+.story-teaser {
+
+  display: -webkit-box;
+  -webkit-line-clamp: 2; 
+  -webkit-box-orient: vertical;
+  overflow: hidden; 
+  text-overflow: ellipsis;
+
+  color: #afafaf;
+  font-size: 14px;
+  margin-top: 4px;
+  line-clamp: 2;
 }
