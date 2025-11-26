@@ -7,8 +7,36 @@
       <title>Radio Dial Component</title>
     </head>
 
+    <style>
+      img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+      }
+
+      .desktop-image {
+        display: none;
+
+        @media screen and (min-width: 1001px) {
+          display: block;
+        }
+      }
+
+      .mobile-image {
+        display: none;
+
+        @media screen and (max-width: 1000px) {
+          display: block;
+        }
+      }
+      
+    </style>
+
     <body>
       <div id="root"></div>
+      <img src="src/assets/desktop-homepage.png" class="desktop-image">
+      <img src="src/assets/mobile-storypage.png" class="mobile-image">
       <script type="module" src="/src/main.tsx"></script>
     </body>
   </html>

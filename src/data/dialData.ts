@@ -20,8 +20,21 @@ export const dialData: DialData = {
     { label: 'connect me', angle: -180 },
     { label: 'help me', angle: 135 },
   ],
-  middle: [], // To be populated later
-  inner: [], // To be populated later
+  middle: [
+    { label: 'world', angle: 90 },
+    { label: 'local', angle: 45 },
+    { label: 'culture', angle: 0 },
+    { label: 'breaking', angle: -45 },
+    { label: 'science', angle: -90 },
+    // { label: 'inspire me', angle: -135 },
+    // { label: 'connect me', angle: -180 },
+    // { label: 'help me', angle: 135 },
+  ], // To be populated later
+  inner: [
+    { label: 'podcast', angle: 0 },
+    { label: 'quick', angle: 45},
+    { label: 'long', angle: 90},
+  ],
 };
 
 // Helper function to get the active option based on angle
