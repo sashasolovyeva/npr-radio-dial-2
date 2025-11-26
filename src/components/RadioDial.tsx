@@ -264,7 +264,7 @@ export function RadioDial({
           <div 
             className="absolute inset-0 rounded-full bg-dial shadow-xl" 
             style={{
-              boxShadow: 'inset 0 0 50px rgba(0,0,0,0.3), 0 0 20px rgba(0,0,0)'
+              boxShadow: 'inset 0 0 50px rgba(0,0,0,0.3), 0 0 10px rgba(0,0,0,.7), 0 0 30px rgba(0,0,0,.4)'
             }}
           />
           

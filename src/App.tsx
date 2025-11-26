@@ -168,7 +168,7 @@ export default function App() {
         <div 
           className="fixed inset-0 z-40 transition-opacity duration-300"
           style={{
-            backgroundColor: '#000000aa',
+            backgroundColor: '#000000cc',
           }}
           onClick={() => setIsExpanded(false)}
         />

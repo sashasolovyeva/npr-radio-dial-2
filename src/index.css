@@ -962,7 +962,7 @@ html {
   top: 20%;
 
   @media screen and (max-width: 1000px) {
-    right: -50%;
+    right: -70%;
   }
   /* --tw-translate-x: calc(70% * -1);
   translate: var(--tw-translate-x) var(--tw-translate-y); */
@@ -974,6 +974,7 @@ html {
 
   @media screen and (max-width: 1000px) {
     right: -20%;
+    top: 0;
   }
 }
 
